@@ -1,0 +1,15 @@
+I. Map:
+
+2. Store
+	- 4 stores: <4,4><7,-1><-3,><-4,-4>
+	- constructor and destructor
+	- in every store same things
+	- methods:
+			- enter: display: quit, sell or buy
+			- private method sell:
+				- 
+				
+	
+Player:
+	- inventory
+	- strength
