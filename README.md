@@ -3,6 +3,7 @@ simple console rpg game written in C++
 
 Project started back in 2012 from great book "C++ Programming for Game Developers". Added to github to finish it, as for now it covers:
 - Map, Player, Monster and Weapon
+
 Modifications from exercises:
 - Gold Modif (done)
 - Character Races (done)
