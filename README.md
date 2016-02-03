@@ -17,4 +17,4 @@ Modifications from exercises:
 Modifications by me:
 
 
-This is basic game but it can act as fundament for more complex game made in Unity
+This is basic game but it can act as fundament for more complex game made eg. in Unity
