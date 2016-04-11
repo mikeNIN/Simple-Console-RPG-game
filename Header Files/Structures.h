@@ -9,17 +9,10 @@
 
 struct Armor
 {
-	std::string mName;
-	int armorValue;
+	std::string ArmorName;
+	int armorSellValue;
+	int armorBuValue;
 	int armorEffect;
-};
-
-struct Item
-{
-	std::string itemName;
-	std::string itemEffect;
-	//int item
-	int itemValue;
 };
 
 struct Spell
@@ -31,9 +24,10 @@ struct Spell
 
 struct Weapon 
 { 
- std::string weaponName; 
- int weaponValue;
- Range mDamageRange; 
+	std::string weaponName; 
+	int weaponSellValue;
+	int weaponBuyValue;
+	Range DamageRange;
 }; 
 
 #endif // STRUCTURES_H

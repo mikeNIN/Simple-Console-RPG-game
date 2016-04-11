@@ -3,11 +3,11 @@
 #ifndef RANGE_H 
 #define RANGE_H 
  
-// Defines a range [mLow, mHigh]. 
+// Defines a range [Low, High]. 
 struct Range 
 { 
-  int mLow; 
-  int mHigh; 
+  int Low; 
+  int High; 
 }; 
  
 #endif //RANGE_H 

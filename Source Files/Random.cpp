@@ -6,7 +6,7 @@
 // Returns a random number in r. 
 int Random(Range r) 
 { 
-  return r.mLow + rand() % ((r.mHigh + 1) - r.mLow); 
+  return r.Low + rand() % ((r.High + 1) - r.Low); 
 } 
  
 // Returns a random number in [low, high]. 

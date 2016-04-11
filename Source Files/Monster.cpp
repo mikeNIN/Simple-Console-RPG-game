@@ -5,20 +5,22 @@
 #include "Monster.h"
 #include "Random.h"
 #include "Player.h"
+#include <vector>
 
 //constructor
+
 Monster::Monster(const std::string& name, int hp, int acc, 
-   int xpReward, int armor, const std::string& weaponName, 
-   int lowDamage, int highDamage, Player &player) 
+   int xpReward, int armor, const std::string& weaponName
+   , int lowDamage, int highDamage) 
 { 
  mName      = name; 
- mHitPoints = hp + player.; 
+ mHitPoints = hp; 
  mAccuracy  = acc; 
  mExpReward = xpReward; 
  mArmor     = armor; 
  mWeapon.weaponName = weaponName; 
- mWeapon.mDamageRange.mLow  = lowDamage; 
- mWeapon.mDamageRange.mHigh = highDamage; 
+ mWeapon.DamageRange.Low  = lowDamage; 
+ mWeapon.DamageRange.High = highDamage; 
 }
 //check if monster is dead
 bool Monster::isDead() 
@@ -52,7 +54,7 @@ void Monster::attack(Player& player)
  
   if( Random(0, 20) < mAccuracy ) 
  { 
-   int damage = Random(mWeapon.mDamageRange); 
+   int damage = Random(mWeapon.DamageRange); 
  
    int totalDamage = damage - player.getArmor(); 
  

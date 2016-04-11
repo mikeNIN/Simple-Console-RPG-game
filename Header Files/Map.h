@@ -3,7 +3,8 @@
  
 #include "Structures.h" 
 #include "Monster.h" 
-#include <string> 
+#include <string>
+#include <vector>
  
 class Map 
 { 
@@ -16,7 +17,7 @@ public:
   int  getPlayerXPos(); 
   int  getPlayerYPos(); 
   void movePlayer(); 
- Monster* checkRandomEncounter(); 
+ std::vector<Monster> checkRandomEncounter(); 
   void printPlayerPos();
   int generateGold(Monster &monster);
   private: 

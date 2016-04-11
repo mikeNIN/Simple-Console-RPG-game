@@ -26,122 +26,129 @@ while( !done )
  
  gameMap.printPlayerPos(); 
   
-  int selection = 1; 
- cout << "1) Move, 2) Rest, 3) View Stats, 4) Quit: "; 
+ int selection = 1;
+
+ cout << "1) Move, 2) Rest, 3) View Stats, 4) Inventory, 5) Quit: "; 
  cin >> selection; 
  
- Monster* monster = 0; 
+ //Monster* monster = 0; 
   switch( selection ) 
  {
-	 case 1: 
-      // Move the player. 
- gameMap.movePlayer(); 
+	 case 1:
+		 {
+			 // Move the player. 
+			gameMap.movePlayer(); 
  
- if( gameMap.getPlayerXPos() == 1 &&  
-    gameMap.getPlayerYPos() == 1 ) 
-{ 
- Store store; 
- store.enter(mainPlayer); 
-}
+		if( gameMap.getPlayerXPos() == 1 &&  
+			gameMap.getPlayerYPos() == 1 ) 
+		{ 
+			Store store; 
+			store.enter(mainPlayer);
+			break;
+		}
 
-  // Check for a random encounter.  This function 
-  // returns a null pointer if no monsters are 
-  // encountered. 
- monster = gameMap.checkRandomEncounter(); 
- 
-  // 'monster' not null, run combat simulation. 
-  
-      if( monster != 0 ) 
- { 
-	 // Loop until a 'b
-	 //keep armor in case player choose shield 
-	   int playerArmor = mainPlayer.getArmor(); 
-    while( true ) 
-   {
-    // Display hitpoints
-   mainPlayer.displayHitPoints(); 
-   monster->displayHitPoints(); 
-   cout << endl; 
-   bool runAway = mainPlayer.attack(*monster); 
-	if( runAway )
-	{
-		//it's fucked up idea at that moment, must create 
-		//another method to zero armor
-		mainPlayer.levelUp(playerArmor); 
-		break;
-	}
- 
-    if( monster->isDead() ) 
-   {
-   mainPlayer.victory(monster->getXPReward(), gameMap.generateGold(*monster));
-   mainPlayer.levelUp(playerArmor); 
-   break; 
-   } 
- 
-	monster->attack(mainPlayer); 
- 
-    if( mainPlayer.isDead() ) 
-   { 
-	   mainPlayer.gameover(); 
-	   done = true; 
-	   break; 
-   } 
-	} 
- 
-   // The pointer to a monster returned from 
-   // checkRandomEncounter was allocated with 
-   // 'new', so we must delete it to avoid 
-   // memory leaks. 
-   delete monster; 
-  monster = 0; 
-	  }
- 
-break;
+	  // Check for a random encounter.  This function 
+	  // returns a null pointer if no monsters are 
+	  // encountered. 
+	 std::vector<Monster> monsters = gameMap.checkRandomEncounter(); 
+	 
+	  // 'monster' not null, run combat simulation. 
+	  
+		  if( monsters.size() != 0 ) 
+		{ 
+		 // Loop until a 'break' statement
+		 //keep armor in case player choose shield 
+		   int playerArmor = mainPlayer.getArmor();
+		   for (int idx = 0; idx < int(monsters.size()); idx ++)
+		   {	
+			   while( true ) 
+			   {
+				   // Display hitpoints
+					mainPlayer.displayHitPoints(); 
+					monsters[idx].displayHitPoints(); 
+					cout << endl; 
+					bool runAway = mainPlayer.attack(monsters[idx]); 
+					if( runAway )
+						mainPlayer.levelUp(playerArmor);
+						idx = int(monsters.size());
+						break;
+	 
+					if( monsters[idx].isDead() ) 
+					{
+						mainPlayer.victory(monsters[idx].getXPReward(), gameMap.generateGold(monsters[idx]));
+						mainPlayer.levelUp(playerArmor); 
+						break; 
+					} 
+					monsters[idx].attack(mainPlayer); 
+					cout << endl; 
+					if( mainPlayer.isDead() ) 
+					{ 
+						mainPlayer.gameover(); 
+						done = true; 
+						break; 
+					}
+				}
+		   }
+		  }
+		 }
+	break;
 case 2:
 	if ((Random(1, 4) == 1))
 	{
+		std::vector<Monster> monsters;
 		while(true)
 		{
-			if ((monster = gameMap.checkRandomEncounter())!= 0)
+			monsters = gameMap.checkRandomEncounter();
+			if (monsters.size()!= 0)
 				break;
 		}
 		// :/duplicated code
-		int playerArmor = mainPlayer.getArmor(); 
-		while( true ) 
-		{
-			mainPlayer.displayHitPoints(); 
-			monster->displayHitPoints();
-			cout << endl;
-			monster->attack(mainPlayer); 
-			if( mainPlayer.isDead() ) 
-			{ 
-				mainPlayer.gameover(); 
-				done = true; 
-				break; 
-			}
-			bool runAway = mainPlayer.attack(*monster); 
-			if( runAway )
+		int playerArmor = mainPlayer.getArmor();
+		for (int idx = 0; idx < int(monsters.size()); idx ++)
+		{	
+			while( true ) 
 			{
-				//it's fucked up idea at that moment, must create 
-				//another method to zero armor
-				mainPlayer.levelUp(playerArmor); 
-				break;
-			}
-			if( monster->isDead() ) 
-			{
-				mainPlayer.victory(monster->getXPReward(), gameMap.generateGold(*monster));
-				mainPlayer.levelUp(playerArmor); 
-				break; 
-			}
+				mainPlayer.displayHitPoints(); 
+				monsters[idx].displayHitPoints();
+				cout << endl;
+				monsters[idx].attack(mainPlayer); 
+				if( mainPlayer.isDead() ) 
+				{ 
+					mainPlayer.gameover(); 
+					done = true; 
+					break; 
+				}
+				bool runAway = mainPlayer.attack(monsters[idx]);
+				if( runAway )
+				{
+					//it's fucked up idea at that moment, must create 
+					//another method to zero armor
+					mainPlayer.levelUp(playerArmor);
+					idx = int(monsters.size());
+					break;
+				}
+				if( monsters[idx].isDead() ) 
+				{
+					mainPlayer.victory(monsters[idx].getXPReward(), gameMap.generateGold(monsters[idx]));
+					mainPlayer.levelUp(playerArmor); 
+					break; 
+				}
 
+			}
 		}
 	}
-   mainPlayer.rest(); 
+	else
+	{
+		mainPlayer.rest();
+	}
    break; 
-     case 3: 
-   mainPlayer.viewStats(); 
-   break; 
-     case 4: 
+case 3: 
+    mainPlayer.viewStats(); 
+	break;
+case 4:
+	mainPlayer.viewInventory();
+	break;
+case 5: 
    done = true; 
    break;
    }// End Switch Statement 

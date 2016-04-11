@@ -5,6 +5,7 @@
  
 #include "Structures.h"
 #include "Monster.h"
+#include "Items.h"
 #include <string>
 #include <vector>
 
@@ -17,8 +18,14 @@ public:
  
   // Methods 
   bool isDead(); 
-  std::string getName(); 
-  int  getArmor(); 
+  std::string getName() const;
+  int getArmor() const;
+  bool buyWeapon(std::string name, int sellValue, int lowDmg, int highDmg, int cost);
+  bool buyArmor(std::string name, int sellValue, int effect, int cost);
+  bool buyItem(Item& item);
+  void sellArmor();
+  void sellWeapon();
+  void sellItem();
   void takeDamage(int damage); 
   void createClass(); 
   bool attack(Monster& monster); 
@@ -28,25 +35,27 @@ public:
   void victory(int xp, int gold); 
   void gameover(); 
   void displayHitPoints();
+  void viewInventory();
   
 private: 
   // Data members.
-  std::string mName; 
-  std::string mClassName;
-  std::string mRace;
-  int         mAccuracy; 
-  int         mHitPoints; 
-  int         mMaxHitPoints;
-  int		  mMagicPoints;
-  int		  mMaxMagPoints;
-  int         mExpPoints; 
-  int         mNextLevelExp; 
-  int         mLevel; 
-  int         mArmor; 
-  int		  mGold;
-  std::vector<Spell> mSpellBook;
-  Weapon      mWeapon;
-  Spell		  mSpell;
+  std::string pName; 
+  std::string pClassName;
+  std::string pRace;
+  int         pAccuracy; 
+  int         pHitPoints; 
+  int         pMaxHitPoints;
+  int		  pMagicPoints;
+  int		  pMaxMagPoints;
+  int         pExpPoints; 
+  int         pNextLevelExp; 
+  int         pLevel; 
+  int		  pGold;
+  std::vector<Spell> pSpellBook;
+  Armor       pArmor;
+  Weapon      pWeapon;
+  Spell		  pSpell;
+  std::vector<Item> pItemsInventory;
 }; 
  
 #endif //PLAYER_H
