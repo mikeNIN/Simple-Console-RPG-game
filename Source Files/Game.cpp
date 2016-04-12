@@ -69,10 +69,11 @@ while( !done )
 					cout << endl; 
 					bool runAway = mainPlayer.attack(monsters[idx]); 
 					if( runAway )
+					{
 						mainPlayer.levelUp(playerArmor);
 						idx = int(monsters.size());
 						break;
-	 
+					}
 					if( monsters[idx].isDead() ) 
 					{
 						mainPlayer.victory(monsters[idx].getXPReward(), gameMap.generateGold(monsters[idx]));
